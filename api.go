@@ -25,7 +25,7 @@ func (api *APIServer) Run() {
 	e.Use(middleware.Logger())
 
   AccountService.RegisterRoutes(e)
-  go TransactionService.RegisterRoutes(e)
+  TransactionService.RegisterRoutes(e)
 
 	e.Logger.Fatal(e.Start(api.address))
 }

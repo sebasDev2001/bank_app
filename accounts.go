@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	"github.com/sebasdev2001/bank_app/types"
 )
@@ -25,7 +26,13 @@ func (s *AccountSerivce) RegisterRoutes(e *echo.Echo) {
 
 func handleGetAccount(c echo.Context) error {
   account_id := c.Param("id")
+  if err := uuid.Validate(account_id); err != nil {
+    return err // change this to be a json response with error
+  }
   fmt.Printf("account_id: %v\n", account_id)
+
+  // search for account and return it
+
   return c.JSON(http.StatusOK, &types.Account{})
 }
 
