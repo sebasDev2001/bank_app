@@ -14,7 +14,7 @@ type AccountSerivce struct {
   store Store
 }
 
-func NewAccountSertice(s Store) *AccountSerivce {
+func NewAccountService(s Store) *AccountSerivce {
   return &AccountSerivce{store: s}
 }
 
@@ -37,12 +37,19 @@ func handleGetAccount(c echo.Context) error {
 }
 
 func handleCreateAccount(c echo.Context) error {
-  accRequest := new(types.CreateAccountRequest)
+  accRequest := new(types.AccountRequest)
   if err := json.NewDecoder(c.Request().Body).Decode(accRequest); err != nil {
     return fmt.Errorf("error decoding request: %v", err)
   }
+  if err := validateAccount(accRequest); err != nil {
+    return err // this is a json response
+  }
   acc := types.NewAccount(accRequest.FirstName, accRequest.LastName, accRequest.Email)
   return c.JSON(http.StatusOK, &acc)
+}
+
+func validateAccount(acc *types.AccountRequest) error {
+	panic("unimplemented")
 }
 
 func handleDeleteAccount(c echo.Context) error {

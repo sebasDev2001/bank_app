@@ -3,7 +3,8 @@ package main
 import "database/sql"
 
 type Store interface {
-  TestF() error 
+  CreateAccount() error 
+  CreateTransaction() error
 }
 
 type Storage struct {
@@ -14,6 +15,10 @@ func NewStore(db *sql.DB) *Storage {
   return &Storage{db: db}
 }
 
-func (s *Storage) TestF() error {
+func (s *Storage) CreateAccount() error {
+  return nil
+}
+
+func (s *Storage) CreateTransaction() error {
   return nil
 }

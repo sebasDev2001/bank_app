@@ -19,7 +19,7 @@ func NewAPIServer(address string, store Store) *APIServer {
 }
 
 func (api *APIServer) Run() {
-  AccountService := NewAccountSertice(api.store)
+  AccountService := NewAccountService(api.store)
   TransactionService := NewTransactionService(api.store)
 	e := echo.New()
 	e.Use(middleware.Logger())

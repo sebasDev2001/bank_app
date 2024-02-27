@@ -18,7 +18,7 @@ type (
 		CreatedAt     time.Time `json:"createdAt"`
 	}
 
-  CreateAccountRequest struct {
+  AccountRequest struct {
     FirstName string `json:"firstName"`
     LastName string `json:"lastName"`
     Email string `json:"email"`
@@ -36,4 +36,3 @@ func NewAccount(firstName, lastName, email string) *Account {
 		CreatedAt:     time.Now().UTC(),
 	}
 }
-
