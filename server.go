@@ -7,11 +7,11 @@ import (
 )
 
 func main() {
-  database, err := db.GetDbInstance().Init()
-  if err != nil {
-    log.Fatal(err)
-  }
-  store := NewStore(database)
+	database, err := db.GetDbInstance().Init()
+	if err != nil {
+		log.Fatal(err)
+	}
+	store := NewStore(database)
 	server := NewAPIServer(":4545", store)
 	server.Run()
 }

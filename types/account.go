@@ -1,7 +1,6 @@
 package types
 
 import (
-	"math/rand"
 	"time"
 
 	"github.com/google/uuid"
@@ -9,7 +8,6 @@ import (
 
 type (
 	Account struct {
-		ID            int       `json:"id"`
 		AccountNumber string    `json:"accountNumber"`
 		FirstName     string    `json:"firstName"`
 		LastName      string    `json:"lastName"`
@@ -18,17 +16,15 @@ type (
 		CreatedAt     time.Time `json:"createdAt"`
 	}
 
-  AccountRequest struct {
-    FirstName string `json:"firstName"`
-    LastName string `json:"lastName"`
-    Email string `json:"email"`
-  }
-
+	AccountRequest struct {
+		FirstName string `json:"firstName" validate:"required"`
+		LastName  string `json:"lastName" validate:"required"`
+		Email     string `json:"email" validate:"required,email"`
+	}
 )
 
 func NewAccount(firstName, lastName, email string) *Account {
 	return &Account{
-		ID:            rand.Intn(100000),
 		AccountNumber: uuid.NewString(),
 		FirstName:     firstName,
 		LastName:      lastName,
