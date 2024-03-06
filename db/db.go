@@ -28,9 +28,9 @@ type Database struct {
 }
 
 func (d *Database) Init() (*sql.DB, error) {
-	// if err := d.createAccountTable(); err != nil {
-	// 	return nil, err
-	// }
+	if err := d.createAccountTable(); err != nil {
+		return nil, err
+	}
 	// if err := d.createTrasactionTable(); err != nil {
 	// 	return nil, err
 	// }
@@ -73,21 +73,25 @@ func newDatabase() (*Database, error) {
 
 func (D *Database) createAccountTable() error {
 	_, err := D.db.Exec(`
-     CREATE TABLE IF NOT EXISTS account (
-       id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-       account_number uuid NOT NULL 
-       ...
-     )  
-  `)
-
+      create table if not exists account (
+          id uuid unique not null,
+          first_name varchar(50) unique,
+          last_name varchar(50),
+          email varchar(50) not null,
+          balance float,
+          created_at timestamp
+      )`)
 	return err
 }
 
 func (D *Database) createTrasactionTable() error {
 	_, err := D.db.Exec(`
     CREATE TABLE IF NOT EXISTS transaction (
-      ...
-
+      id uuid unique not null,
+      from_account uuid,
+      to_account uuid,
+      amount int,
+      created_at timestamps
     )
   `)
 	return err
