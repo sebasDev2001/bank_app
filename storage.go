@@ -9,7 +9,8 @@ import (
 
 type Store interface {
 	CreateAccount(*types.Account) error
-	DeleteAccount(int) error
+  GetAccount(string) (*types.Account, error)
+	DeleteAccount(string) error
 	UpdateAccount(*types.Account) error
 	CreateTransaction(*types.Transaction) error
 }
@@ -42,6 +43,10 @@ func (s *Storage) CreateAccount(acc *types.Account) error {
 	fmt.Printf("Account creation resp: %v\n", resp)
 
 	return nil
+}
+
+func (s *Storage) GetAccount(id int) (*types.Account, error) {
+  return nil, nil
 }
 
 func (s *Storage) DeleteAccount(id int) error {
