@@ -24,6 +24,12 @@ func NewStore(db *sql.DB) *Storage {
 }
 
 func (s *Storage) CreateAccount(acc *types.Account) error {
+
+  _, err :=  s.GetAccount(acc.Email)
+  if err != nil {
+    return err
+  }
+
 	query := `insert into account
   (first_name, last_name, email, balance, created_at)
   values ($1, $2, $3, $4, $5);`
@@ -45,7 +51,7 @@ func (s *Storage) CreateAccount(acc *types.Account) error {
 	return nil
 }
 
-func (s *Storage) GetAccount(id int) (*types.Account, error) {
+func (s *Storage) GetAccount(email string) (*types.Account, error) {
   return nil, nil
 }
 

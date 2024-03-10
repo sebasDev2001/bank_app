@@ -52,7 +52,7 @@ func (s *AccountSerivce) handleCreateAccount(c echo.Context) error {
 	acc := types.NewAccount(accRequest.FirstName, accRequest.LastName, accRequest.Email)
 
   if err:= s.store.CreateAccount(acc); err != nil {
-    return c.JSON(http.StatusBadRequest, createError(err.Error(), acc))
+    return c.JSON(http.StatusBadRequest, &types.ErrorResponse{Error: fmt.Sprintf("%v", err.Error())})
   }
 
 	return c.JSON(http.StatusOK, acc)
@@ -70,8 +70,4 @@ func (s *AccountSerivce) handleUpdateAccount(c echo.Context) error {
   fmt.Printf("account_id: %v\n", account_id)
 
   return c.JSON(http.StatusOK, &types.Account{})
-}
-
-func createError[T any](message string, v T) error {
-	return fmt.Errorf("%s: %v", message, v)
 }

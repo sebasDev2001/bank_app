@@ -31,9 +31,9 @@ func (d *Database) Init() (*sql.DB, error) {
 	if err := d.createAccountTable(); err != nil {
 		return nil, err
 	}
-	// if err := d.createTrasactionTable(); err != nil {
-	// 	return nil, err
-	// }
+	if err := d.createTrasactionTable(); err != nil {
+		return nil, err
+	}
 
 	return d.db, nil
 }
@@ -73,26 +73,32 @@ func newDatabase() (*Database, error) {
 
 func (D *Database) createAccountTable() error {
 	_, err := D.db.Exec(`
-      create table if not exists account (
-          id uuid unique not null,
-          first_name varchar(50) unique,
-          last_name varchar(50),
-          email varchar(50) not null,
-          balance float,
-          created_at timestamp
-      )`)
+    CREATE TABLE IF NOT EXISTS account (
+      id uuid default get_random_uuid(),
+      first_name varchar(128) not null,
+      last_name varchar(128) not null,
+      email varchar(64) unique not null,
+      balance numeric(2),
+      created_at timestamp,
+      PRIMARY KEY (id)
+    );
+  `)
 	return err
 }
 
 func (D *Database) createTrasactionTable() error {
 	_, err := D.db.Exec(`
     CREATE TABLE IF NOT EXISTS transaction (
-      id uuid unique not null,
-      from_account uuid,
-      to_account uuid,
-      amount int,
-      created_at timestamps
-    )
+      id uuid default get_random_uuid(),
+      origin_acc uuid not null,
+      det_acc uuid not null,
+      amount numeric(2) check (amount >= 0),
+      created_at datetime default current_timestamp,
+      updated_at datetime,
+
+      foreign key (origin_acc) references account(id),
+      foreign key (dest_acc) references account(id)
+    );
   `)
 	return err
 }
