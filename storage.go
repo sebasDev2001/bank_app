@@ -10,7 +10,7 @@ import (
 type Store interface {
 	CreateAccount(*types.Account) error
   GetAccount(string) (*types.Account, error)
-	DeleteAccount(string) error
+	DeleteAccount(int) error
 	UpdateAccount(*types.Account) error
 	CreateTransaction(*types.Transaction) error
 }
